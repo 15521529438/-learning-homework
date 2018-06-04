@@ -5,9 +5,9 @@ System.js引用的一些问题，加载不出来模块？
 
 ES的引入问题<br/>
 (function($) {      
-    $.fn.pluginName = function() {    
-         // Our plugin implementation code goes here.    
-    };     
+    &nbsp;&nbsp;$.fn.pluginName = function() {    
+    &nbsp;&nbsp;&nbsp;&nbsp;// Our plugin implementation code goes here.    
+    &nbsp;&nbsp;};     
 })(jQuery);    
 资源地址：https://www.cnblogs.com/weblv/p/5249841.html
 
