@@ -1,0 +1,21 @@
+{
+  "name": "first-combat",
+  "version": "1.0.0",
+  "description": "第一周实战",
+  "main": "index.js",
+  "scripts": {
+    "test": "karma start",
+    "build": "babel src -d js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "jasmine-core": "^3.1.0",
+    "karma-coverage": "^1.1.2",
+    "karma-jasmine": "^1.1.2",
+    "karma-phantomjs-launcher": "^1.0.4"
+  }
+}

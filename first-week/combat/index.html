@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ES6点赞的实现</title>
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+	<header>
+	    <nav></nav>
+	</header>
+
+	<main class="content">
+		<section>
+	    	<div style="margin: 30px 0 50px 0;">
+	    		<a href="#">父类点赞数: <span class="badge" id="f-num">0</span></a>
+	    	</div>
+			<button type="button" class="btn btn-default btn-lg" aria-label="Left Align" id="f-up">
+			  <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+			</button>
+
+			<button type="button" class="btn btn-default btn-lg" id="f-down">
+			  <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+			</button>
+	    </section>
+	    <section>
+	    	<div style="margin: 30px 0 50px 0;">
+	    		<a href="#">子类继承的点赞数: <span class="badge" id="c-num">0</span></a>
+	    	</div>
+			<button type="button" class="btn btn-default btn-lg" aria-label="Left Align" id="c-up">
+			  <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+			</button>
+
+			<button type="button" class="btn btn-default btn-lg" id="c-down">
+			  <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+			</button>
+	    </section>
+	</main>
+
+	<footer>
+	</footer>
+	<script src="./public/system.js"></script>
+	<script>
+		System.import('./public/jquery.js').then(function (system) {
+			console.log('hou....',$,'system',system)
+				System.import('./js/demo.js').then(function (system) {
+					$('c-num').praise('f-num','f-up','f-down','c-num','c-up','c-down');
+				});
+		});
+
+	</script> 
+	<!-- <script src="../lib/demo.js"></script> -->
+</body>
+</html>
