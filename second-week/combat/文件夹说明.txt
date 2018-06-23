@@ -1,0 +1,6 @@
+views->静态页面文件夹
+public->静态资源文件（js、css）
+controller->路由配置文件
+config->端口的配置
+models->访问数据的封装，如PHP
+middleware->容错文件配置

@@ -11,7 +11,8 @@ if (!$con)
   	mysql_select_db("PHPlesson", $con);
   	mysql_query("set names 'utf8'");
 	$num = $_REQUEST['num'];
-	mysql_query("INSERT INTO `likes`(`num`) VALUES ($num)");
+	// mysql_query("INSERT INTO `likes`(`num`) VALUES ($num)");
+	mysql_query("UPDATE likes SET num=$num WHERE id=1");
 	echo 'success!';
   }
 

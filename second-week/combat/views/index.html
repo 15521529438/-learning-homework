@@ -1,95 +1,96 @@
 
 
 {% extends 'layout.html' %}
-{% block title %}无敌坑 {{title}}{%endblock%}
+{% block title %}{{title}}{%endblock%}
 
 {% block head %}
-<link rel="stylesheet" href="styles/bootstrap.min.css">
-<script src="scripts/jquery.js"></script>
-<script src="scripts/underscore.js"></script>
+<link rel="stylesheet" href="/styles/bootstrap.min.css">
+<script src="/scripts/jquery.js"></script>
+<script src="/scripts/underscore.js"></script>
 {% endblock %}
 {% block content %}
 <main class="content">
-	<section>
-    	<div style="margin: 30px 0 50px 0;">
-    		<a href="#">父类点赞数: <span class="badge" id="f-num">0</span></a>
-    	</div>
-		<button type="button" class="btn btn-default btn-lg" aria-label="Left Align" id="f-up">
-		  <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-		</button>
+    <section>
+        <div style="margin: 30px 0 50px 0;">
+            <a href="#">父类点赞数: <span class="badge" id="f-num">0</span></a>
+        </div>
+        <button type="button" class="btn btn-default btn-lg" aria-label="Left Align" id="f-up">
+          <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+        </button>
 
-		<button type="button" class="btn btn-default btn-lg" id="f-down">
-		  <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
-		</button>
+        <button type="button" class="btn btn-default btn-lg" id="f-down">
+          <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+        </button>
     </section>
     <!-- <section>
-    	<div style="margin: 30px 0 50px 0;">
-    		<a href="#">子类继承的点赞数: <span class="badge" id="c-num">0</span></a>
-    	</div>
-		<button type="button" class="btn btn-default btn-lg" aria-label="Left Align" id="c-up">
-		  <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-		</button>
+        <div style="margin: 30px 0 50px 0;">
+            <a href="#">子类继承的点赞数: <span class="badge" id="c-num">0</span></a>
+        </div>
+        <button type="button" class="btn btn-default btn-lg" aria-label="Left Align" id="c-up">
+          <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+        </button>
 
-		<button type="button" class="btn btn-default btn-lg" id="c-down">
-		  <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
-		</button>
+        <button type="button" class="btn btn-default btn-lg" id="c-down">
+          <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+        </button>
     </section> -->
 </main>
 <script>
-	(function() {      
-	  	class Father {
-			  constructor(id, x, y) {
-			  	this.num = 0;
-			  	this.id  = id;
-			  	this.c(x, 'up');
-			  	this.c(y, 'down');
-			  }
+    (function() {      
+        class Father {
+              constructor(id, x, y) {
+                this.num = 0;
+                this.id  = id;
+                this.c(x, 'up');
+                this.c(y, 'down');
+              }
 
-			  getEle(i) {
-			  	return document.getElementById(i);
-			  }
+              getEle(i) {
+                return document.getElementById(i);
+              }
 
-			  toWrite (num) {
-				this.getEle(this.id).innerHTML = num;
-			  }
+              toWrite (num) {
+                this.getEle(this.id).innerHTML = num;
+              }
 
-			nums(n){
-				return n === 'up' ? this.num +=1 : (this.num === 0 ? 0 : this.num -=1);
-			}
+            nums(n){
+                return n === 'up' ? this.num +=1 : (this.num === 0 ? 0 : this.num -=1);
+            }
 
-			  c (i, state) {
-			  	let self = this;
-			  	this.getEle(i).onclick =  _.throttle(function(){
-			  		 	console.log(1101)
-			  		 		self.toWrite(self.nums(state));
-							$.ajax({
-								// url:'http://192.168.1.101/liksphp/mysql.php',
-								url:'/transfers',    //重定向
-								type:'post',
-								dataType:'json',
-								data:{
-									num:self.num
-								},
-								success:function(data){
-									console.log(data)
-								},
-								error:function() {
-									console.log('提交失败')
-								}
-							})
-			  		 },1000)
-			  }
-		}
+              c (i, state) {
+                let self = this;
+                this.getEle(i).onclick =  _.throttle(function(){
+                        console.log(1101)
+                            self.toWrite(self.nums(state));
+                            $.ajax({
+                                url:'http://localhost/liksphp/mysql.php',
+                                //url:'/transfers',    //重定向
+                                // url:'/index/update',
+                                type:'get',
+                                dataType:'json',
+                                data:{
+                                    num:self.num
+                                },
+                                success:function(data){
+                                    console.log(data)
+                                },
+                                error:function() {
+                                    console.log('提交失败')
+                                }
+                            })
+                     },1000)
+              }
+        }
 
-		class Childer extends Father {
-			constructor(id,x,y) {
-			    super(id,x,y); 
-			  }
-		}
-	
-	new Father('f-num','f-up','f-down');
-	// new Childer('c-num','c-up','c-down');
+        class Childer extends Father {
+            constructor(id,x,y) {
+                super(id,x,y); 
+              }
+        }
+    
+    new Father('f-num','f-up','f-down');
+    // new Childer('c-num','c-up','c-down');
 
 })();  
-</script>	
+</script>   
 {% endblock %}

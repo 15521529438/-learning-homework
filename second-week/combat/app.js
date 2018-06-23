@@ -1,46 +1,30 @@
-const Koa = require('koa');
-const render = require('koa-swig');
-const static = require('koa-static');
-const app = module.exports = new Koa();
-const co = require('co');
-const router = require('koa-simple-router');
-const mysql  = require('mysql');
+import Koa from 'koa';
+import router from 'koa-simple-router'
+import initController from "./controller/initController"
+import serve from 'koa-static';
+import render from 'koa-swig'
+import convert from 'koa-convert'; //koa1 转换器
+import co from 'co';
+import babel_co from 'babel-core/register';
+import babel_po from 'babel-polyfill'
+import Config from './config/config'
+const app = new Koa();
+initController.init(app, router);
 
-// 配置静态web服务的中间件
-app.use(static('./public'));//这个地址巨坑。。。。。我靠
 
+//views的路由封装
 app.context.render = co.wrap(render({
-  writeBody: false
+	root: Config.get('viewDir'),
+	autoescape: true,
+	cache: 'memory', // disable, set to false 
+	ext: 'html',
+	writeBody: false
 }));
 
+//静态资源
+app.use(convert(serve(Config.get('staticDir'))));
 
-app.use(router(_ => {
-  _.get('/',  async (ctx, next) => {
-  		ctx.body = await ctx.render('index');
-  })
-  _.get('/index/index',  (ctx, next) => {
-  		ctx.redirect('http://www.baidu.com');
-  })
-  _.post('/transfers',  (ctx, next) => {
-   		console.log(ctx);
- 		ctx.status = 301;
- 		// ctx.set('Referrer', 'balabala');
-		ctx.redirect('http://192.168.1.101/liksphp/mysql.php?num=2');
-		ctx.body = {
-			status: 'success!'
-		}
-  })
-  _.post('/path', (ctx, next) => {
- 		ctx.body = {
- 			aa:111
- 		}
-  })
-}))
+//CONFIG.get('port') =3000
+app.listen(Config.get('port'));
 
-// app.use(async ctx => ctx.body = await ctx.render('index'));
-
-
-
-if (!module.parent) app.listen(3000,()=>{
-    console.log('Server start！')
-});
+export default app
