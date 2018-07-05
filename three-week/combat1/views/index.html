@@ -1,0 +1,96 @@
+
+
+{% extends 'layout.html' %}
+{% block title %}{{title}}{%endblock%}
+
+{% block head %}
+<link rel="stylesheet" href="/styles/bootstrap.min.css">
+<script src="/scripts/jquery.js"></script>
+<script src="/scripts/underscore.js"></script>
+<script src="/scripts/x-tag-polyfilled.min.js"></script>
+<!-- <script src="/scripts/x-tag-raw.min.js"></script> -->
+{% endblock %}
+{% block content %}
+<main class="content">
+    <section>
+        <div style="margin: 30px 0 50px 0;">
+            <a href="#">父类点赞数: <span class="badge" id="f-num">0</span></a>
+        </div>
+        <!-- <button type="button" class="btn btn-default btn-lg" aria-label="Left Align" id="f-up">
+          <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+        </button> -->
+        <x-clock></x-clock>
+
+      <!--   <button type="button" class="btn btn-default btn-lg" id="f-down">
+          <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+        </button> -->
+    </section>
+    <!-- <section>
+        <div style="margin: 30px 0 50px 0;">
+            <a href="#">子类继承的点赞数: <span class="badge" id="c-num">0</span></a>
+        </div>
+        <button type="button" class="btn btn-default btn-lg" aria-label="Left Align" id="c-up">
+          <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+        </button>
+
+        <button type="button" class="btn btn-default btn-lg" id="c-down">
+          <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+        </button>
+    </section> -->
+</main>
+<script>
+
+
+(function(){
+    let num = 0;
+    let clickEvent = {
+        start: function(){
+            document.getElementById('f-num').innerHTML = num;
+        },
+        nums: function(){
+            num += 1;
+        },
+        update: function(){
+            this.nums();
+            this.start();
+        }
+    }
+
+
+
+    const Frank = xtag.create(class extends XTagElement {
+      constructor (){
+       super();
+       clickEvent.start();
+      }
+
+      'click::event' (){
+        clickEvent.update()
+        // $.ajax({
+        //     url: 'http://localhost/liksphp/mysql.php',
+        //     type: 'get',
+        //     dataType: 'json',
+        //     data: {
+        //         num: self.num
+        //     },
+        //     success: function(data) {
+        //         console.log(data)
+        //     },
+        //     error: function() {
+        //         console.log('提交失败')
+        //     }
+        // })
+      }
+
+      '::template(true)' (){
+        return `<button type="button" class="btn btn-default btn-lg" aria-label="Left Align" id="f-up">
+                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+            </button>`
+      }
+    });
+
+    xtag.register('x-clock', Frank);
+})()
+
+</script>
+{% endblock %}
